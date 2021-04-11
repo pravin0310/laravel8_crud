@@ -25,6 +25,7 @@
         <th>Course</th>
         <th>Fees</th>
         <th>Date</th>
+        <th>Image</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -36,6 +37,7 @@
         <td>{{$student->course}}</td>
         <td>{{$student->fee}}</td>
         <td>{{$student->created_at}}</td>
+        <td><img src="{{url('/images')}}/{{$student->image}}" width="100px" alt="img"></td>
         <td><a href="/edit/{{$student->id}}"><button class="btn btn-success">Edit</button></a></td>
         <td><a href="/delete/{{$student->id}}"><button class="btn btn-danger">Delete</button></a></td>
       </tr>    

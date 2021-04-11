@@ -8,7 +8,7 @@
          {{Session::get('student_created')}}
     </div>
   @endif  
-  <form action="{{route('student.store')}}" method="POST">
+  <form action="{{route('student.store')}}" method="POST" enctype="multipart/form-data">
   @csrf
     <div class="form-group">
       <label for="studentname">Student Name:</label>
@@ -21,6 +21,10 @@
     <div class="form-group">
       <label for="fees">Fees:</label>
       <input type="text" class="form-control" id="fees" placeholder="Enter Fees" name="fees">
+    </div>
+    <div class="form-group">
+      <label for="fees">Document:</label>
+      <input type="file" class="form-control" id="docuement" placeholder="Enter Fees" name="image">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

@@ -37,11 +37,24 @@ class StudentController extends Controller
     public function store(Request $request)
     {
        $student=new Student();
-       $student->studentname=$request->studentname;
-       $student->course=$request->course;
-       $student->fee=$request->fees;
-       $student->save();
-       return redirect('student')->with('student_created','student has beend created succesfuully');
+       $this->validate($request, [
+        'image' => 'required|image',
+    ]);
+
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $name = time().'.'.$image->getClientOriginalExtension();
+        $destinationPath = public_path('/images');
+        $image->move($destinationPath, $name);
+
+        $student->studentname=$request->studentname;
+        $student->course=$request->course;
+        $student->fee=$request->fees;
+        $student->image=$name;
+        $student->save();
+        return redirect('student')->with('student_created','student has beend created succesfuully');
+    }    
+       
     }
 
     /**
@@ -76,12 +89,49 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-       $data=Student::find($request->id);
-       $data->studentname=$request->studentname;
-       $data->course=$request->course;
-       $data->fee=$request->fees;
-       $data->save();
-       return redirect('student')->with('student_updated','student has been Updated succesfuully');
+    //    print_r($request->post());
+    //    exit;
+       $img=$request->image;
+       if(!empty($img))
+       {
+
+        $this->validate($request, [
+            'image' => 'required|image',
+            ]);
+            
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+            
+            $data=Student::find($request->id);
+            $data->studentname=$request->studentname;
+            $data->course=$request->course;
+            $data->fee=$request->fees;
+            $data->image=$name;
+            $data->save();
+            return redirect('student')->with('student_updated','student has been Updated succesfuully');   
+
+           
+          
+       }else
+       {
+        $name=$request->old_image;
+         
+           $data=Student::find($request->id);
+           $data->studentname=$request->studentname;
+           $data->course=$request->course;
+           $data->fee=$request->fees;
+           $data->image=$name;
+           $data->save();
+           return redirect('student')->with('student_updated','student has been Updated succesfuully');   
+                
+       }
+       
+      
+       
+
+      
 
     }
 
