@@ -24,3 +24,7 @@ Route::post('/store',[StudentController::class, 'store'])->name('student.store')
 Route::post('/edit',[StudentController::class, 'update'])->name('student.edit');
 Route::get('/edit/{id}',[StudentController::class, 'edit']);
 Route::get('/delete/{id}',[StudentController::class, 'destroy']);
+// payment gate way route
+Route::get('checkout','CheckoutController@checkout');
+Route::post('checkout','CheckoutController@afterpayment')->name('checkout.credit-card');
+// payment gate way route End

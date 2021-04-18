@@ -95,22 +95,21 @@ class StudentController extends Controller
        if(!empty($img))
        {
 
-        $this->validate($request, [
-            'image' => 'required|image',
-            ]);
-            
-            $image = $request->file('image');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
-            $image->move($destinationPath, $name);
-            
-            $data=Student::find($request->id);
-            $data->studentname=$request->studentname;
-            $data->course=$request->course;
-            $data->fee=$request->fees;
-            $data->image=$name;
-            $data->save();
-            return redirect('student')->with('student_updated','student has been Updated succesfuully');   
+                // $this->validate($request, [
+                // 'image' => 'required|image',
+                // ]);
+                $image = $request->file('image');
+                $name = time().'.'.$image->getClientOriginalExtension();
+                $destinationPath = public_path('/images');
+                $image->move($destinationPath, $name);
+                
+                $data=Student::find($request->id);
+                $data->studentname=$request->studentname;
+                $data->course=$request->course;
+                $data->fee=$request->fees;
+                $data->image=$name;
+                $data->save();
+                return redirect('student')->with('student_updated','student has been Updated succesfuully');   
 
            
           
